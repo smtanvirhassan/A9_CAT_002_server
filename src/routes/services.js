@@ -51,13 +51,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /api/services/featured - 6 active services for homepage
+// GET /api/services/featured - active services for homepage
 router.get("/featured", async (req, res) => {
   try {
     const { servicesCollection } = await connectToMongoDB();
+    const limit = Math.min(Number(req.query.limit) || 8, 16);
     const featured = await servicesCollection
       .find({ status: "active" })
-      .limit(6)
+      .limit(limit)
       .toArray();
     res.json(featured);
   } catch (err) {
