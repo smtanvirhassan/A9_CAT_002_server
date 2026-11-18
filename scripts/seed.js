@@ -106,13 +106,12 @@ async function seed() {
     console.log("Connected to MongoDB for seeding...");
     const db = client.db("salonbook");
 
-    // Collections
     const services = db.collection("services");
     const users = db.collection("user");
     const appointments = db.collection("appointments");
     const transactions = db.collection("transactions");
 
-    // Indexes
+    // Create Indexes
     await services.createIndex({ category: 1, status: 1 });
     await services.createIndex({ serviceName: "text" });
     await appointments.createIndex({ customerId: 1 });
@@ -126,32 +125,16 @@ async function seed() {
       await services.insertMany(initialServices);
       console.log(`Successfully seeded ${initialServices.length} salon services!`);
     } else {
-      console.log(`Services collection already has ${count} items. Skipping service seeding.`);
+      console.log(`Services collection already has ${count} items.`);
     }
 
-    // Seed or update admin user
+    // Ensure admin user role is admin
     const adminEmail = process.env.ADMIN_EMAIL || "admin@salonbook.com";
-    const existingAdmin = await users.findOne({ email: adminEmail });
-    if (!existingAdmin) {
-      await users.insertOne({
-        name: "SalonBook Administrator",
-        email: adminEmail,
-        emailVerified: true,
-        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-        role: "admin",
-        isBlocked: false,
-        phone: "+1 (555) 234-5678",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-      console.log(`Created admin account for: ${adminEmail}`);
-    } else {
-      await users.updateOne(
-        { email: adminEmail },
-        { $set: { role: "admin", isBlocked: false } }
-      );
-      console.log(`Updated admin account role for: ${adminEmail}`);
-    }
+    await users.updateOne(
+      { email: adminEmail },
+      { $set: { role: "admin", isBlocked: false, phone: "+1 (555) 234-5678" } }
+    );
+    console.log(`Ensured administrator privileges for: ${adminEmail}`);
 
     console.log("Database seed completed successfully!");
   } catch (err) {
