@@ -73,7 +73,7 @@ const fullServicesList = [
     description: "Seamless grey blending or shade enrichment between major color appointments for lustrous mirror-like shine.",
     price: 90,
     duration: 75,
-    image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -120,7 +120,7 @@ const fullServicesList = [
     description: "Deep clarifying scalp exfoliation with tea tree micro-beads, lymphatic drainage, and cold steam hydration.",
     price: 70,
     duration: 45,
-    image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
 
@@ -140,7 +140,7 @@ const fullServicesList = [
     description: "Opulent anti-aging ritual with pure colloidal gold sheets, ultrasonic lifting, and marine collagen peptide infusion.",
     price: 140,
     duration: 90,
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1576426863848-c21f53c60b19?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -149,7 +149,7 @@ const fullServicesList = [
     description: "Targeted salicylic peel, gentle sonic comedone extractions, high frequency bactericidal wand, and medical LED blue light.",
     price: 85,
     duration: 60,
-    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -292,7 +292,7 @@ const fullServicesList = [
     description: "Side-by-side heated stone massages in our private VIP duo suite followed by artisan tea, chocolates, and scalp elixirs.",
     price: 260,
     duration: 120,
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -301,7 +301,7 @@ const fullServicesList = [
     description: "Executive precision cut, straight razor beard sculpt, express clarifying facial, and deep hand grooming.",
     price: 155,
     duration: 105,
-    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80",
     status: "active",
   }
 ];
