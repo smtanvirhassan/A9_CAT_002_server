@@ -35,7 +35,7 @@ const fullServicesList = [
     description: "Volumizing wash, heat-activated peptide infusion, and celebrity-level round-brush styling with soft cascading waves.",
     price: 75,
     duration: 50,
-    image: "https://images.unsplash.com/photo-1522337094346-290f26a0b904?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -120,7 +120,7 @@ const fullServicesList = [
     description: "Deep clarifying scalp exfoliation with tea tree micro-beads, lymphatic drainage, and cold steam hydration.",
     price: 70,
     duration: 45,
-    image: "https://images.unsplash.com/photo-1512290900672-1f02e604085f?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
 
@@ -140,7 +140,7 @@ const fullServicesList = [
     description: "Opulent anti-aging ritual with pure colloidal gold sheets, ultrasonic lifting, and marine collagen peptide infusion.",
     price: 140,
     duration: 90,
-    image: "https://images.unsplash.com/photo-1512290903671-17adc820948b?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -245,7 +245,7 @@ const fullServicesList = [
     description: "Therapeutic full body massage utilizing organic essential oils to release chronic muscle tension and promote deep tranquility.",
     price: 120,
     duration: 60,
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -254,7 +254,7 @@ const fullServicesList = [
     description: "Heated hand-carved pink salt crystal stones infused with 84 minerals to melt stress and gently balance negative ions.",
     price: 140,
     duration: 75,
-    image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
@@ -272,7 +272,7 @@ const fullServicesList = [
     description: "Fast-acting tension dissolving session focusing on cervical vertebrae, temples, and cranial pressure release points.",
     price: 65,
     duration: 40,
-    image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
 
