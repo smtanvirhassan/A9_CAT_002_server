@@ -28,6 +28,10 @@ async function updateImages() {
       {
         name: "Moroccan Detox Scrub & Mud Wrap",
         image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Ultimate Royal Bridal Sanctuary",
+        image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80"
       }
     ];
 
@@ -43,7 +47,8 @@ async function updateImages() {
     const oldFlagged = [
       "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80"
     ];
 
     const remaining = await services.find({ image: { $in: oldFlagged } }).toArray();

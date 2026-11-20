@@ -283,7 +283,7 @@ const fullServicesList = [
     description: "Comprehensive pre-wedding day journey: couture bridal up-do, trial run, luxury Hydra-Luxe facial, champagne gel mani-pedi.",
     price: 360,
     duration: 240,
-    image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=800&q=80",
     status: "active",
   },
   {
