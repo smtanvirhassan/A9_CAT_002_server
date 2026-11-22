@@ -99,15 +99,17 @@ app.get("/", (req, res) => {
   res.json({ message: "SalonBook Server is running smoothly!" });
 });
 
-connectToMongoDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`SalonBook Server is running at http://localhost:${PORT}`);
+if (!process.env.VERCEL) {
+  connectToMongoDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`SalonBook Server is running at http://localhost:${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error("Failed to start server due to MongoDB connection error:", err);
+      process.exit(1);
     });
-  })
-  .catch((err) => {
-    console.error("Failed to start server due to MongoDB connection error:", err);
-    process.exit(1);
-  });
+}
 
 export default app;
