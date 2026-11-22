@@ -68,5 +68,5 @@ The official backend REST API server for the **SalonBook** appointment booking p
    ```
 
 ## Repository Links
-- **Client**: `../client`
-- **Server**: `.`
+- **Client Repository**: [https://github.com/smtanvirhassan/A9_CAT_002_client](https://github.com/smtanvirhassan/A9_CAT_002_client)
+- **Server Repository**: [https://github.com/smtanvirhassan/A9_CAT_002_server](https://github.com/smtanvirhassan/A9_CAT_002_server)
