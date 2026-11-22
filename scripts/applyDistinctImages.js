@@ -47,7 +47,6 @@ async function applyDistinctImages() {
       console.log(`Updated "${item.name}": matched ${res.matchedCount}, modified ${res.modifiedCount}`);
     }
 
-    // Now verify duplicates
     const all = await services.find({}).toArray();
     console.log(`Checking uniqueness among all ${all.length} services...`);
     const map = {};

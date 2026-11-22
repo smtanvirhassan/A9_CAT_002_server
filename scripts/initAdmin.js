@@ -12,7 +12,6 @@ async function fixAdmin() {
   await db.collection("account").deleteMany({ accountId: "admin@salonbook.com" });
   await c.close();
 
-  // Register via Better Auth endpoint so password hashing matches
   const res = await fetch("http://localhost:3000/api/auth/sign-up/email", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Origin": "http://localhost:3000" },
@@ -25,7 +24,6 @@ async function fixAdmin() {
   });
   console.log("Admin signup status:", res.status);
 
-  // Upgrade role to admin
   await c.connect();
   await db.collection("user").updateOne(
     { email: "admin@salonbook.com" },

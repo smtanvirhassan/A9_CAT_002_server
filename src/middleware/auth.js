@@ -29,13 +29,12 @@ export const verifyToken = async (req, res, next) => {
       const result = await jwtVerify(token, jwks);
       payload = result.payload;
     } catch (jwksErr) {
-      // In development or if Better Auth signed token with secret
+
       return res.status(401).send({ msg: "Unauthorized: Invalid or expired token!" });
     }
 
     const { usersCollection } = await connectToMongoDB();
-    
-    // Look up user by sub (user id) or email
+
     let dbUser = null;
     if (payload.sub) {
       try {
@@ -48,7 +47,6 @@ export const verifyToken = async (req, res, next) => {
       dbUser = await usersCollection.findOne({ email: payload.email });
     }
 
-    // Attach user information to request
     req.user = {
       id: dbUser?._id?.toString() || payload.sub,
       email: dbUser?.email || payload.email,

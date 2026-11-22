@@ -5,7 +5,6 @@ import { verifyToken, verifyAdmin, verifyNotBlocked } from "../middleware/auth.j
 
 const router = express.Router();
 
-// GET /api/overview/customer - Customer Dashboard Statistics
 router.get("/customer", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { appointmentsCollection } = await connectToMongoDB();
@@ -38,7 +37,6 @@ router.get("/customer", verifyToken, verifyNotBlocked, async (req, res) => {
   }
 });
 
-// GET /api/overview/admin - Admin Dashboard Statistics
 router.get("/admin", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const {

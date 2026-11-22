@@ -2,11 +2,10 @@ import dns from "dns";
 import { MongoClient } from "mongodb";
 import "dotenv/config";
 
-// Ensure reliable SRV DNS resolution on Windows environments
 try {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
 } catch (err) {
-  // Ignore in environments where setting DNS servers is restricted
+
 }
 
 const uri = process.env.MONGODB_URI;

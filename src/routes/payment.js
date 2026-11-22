@@ -8,7 +8,6 @@ const router = express.Router();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_mock");
 
-// POST /api/payment/create-checkout-session
 router.post("/create-checkout-session", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -23,7 +22,6 @@ router.post("/create-checkout-session", verifyToken, verifyNotBlocked, async (re
       return res.status(404).json({ msg: "Appointment not found" });
     }
 
-    // Verify ownership
     const isOwner =
       appointment.customerId === req.user.id ||
       appointment.customerEmail === req.user.email;
@@ -32,7 +30,6 @@ router.post("/create-checkout-session", verifyToken, verifyNotBlocked, async (re
       return res.status(403).json({ msg: "You can only pay for your own appointments" });
     }
 
-    // Rule: Customers cannot pay for cancelled or pending appointments
     if (appointment.status !== "confirmed") {
       return res.status(400).json({
         msg: "Only confirmed appointments can be paid for. Please wait for admin confirmation.",
@@ -116,8 +113,6 @@ router.post("/create-checkout-session", verifyToken, verifyNotBlocked, async (re
   }
 });
 
-// POST /api/payment/verify-session
-// Confirms session status directly from Stripe API (e.g. for success page sync)
 router.post("/verify-session", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -186,13 +181,11 @@ router.post("/verify-session", verifyToken, verifyNotBlocked, async (req, res) =
       if (appointmentId && ObjectId.isValid(appointmentId)) {
         const { appointmentsCollection, transactionsCollection } = await connectToMongoDB();
 
-        // Atomically update appointment payment status
         await appointmentsCollection.updateOne(
           { _id: new ObjectId(appointmentId) },
           { $set: { paymentStatus: "paid", updatedAt: new Date() } }
         );
 
-        // Record transaction if not already recorded
         const existingTx = await transactionsCollection.findOne({ stripeSessionId: session.id });
         if (!existingTx) {
           const transactionDoc = {
@@ -229,7 +222,6 @@ router.post("/verify-session", verifyToken, verifyNotBlocked, async (req, res) =
   }
 });
 
-// GET /api/payment/transactions - Admin views all payment transactions
 router.get("/transactions", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { transactionsCollection } = await connectToMongoDB();

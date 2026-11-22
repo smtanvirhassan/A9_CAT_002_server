@@ -43,7 +43,6 @@ async function updateImages() {
       console.log(`Updated "${item.name}": matched ${result.matchedCount}, modified ${result.modifiedCount}`);
     }
 
-    // Also check if any remaining service in the DB has the 3 old flagged images
     const oldFlagged = [
       "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80",

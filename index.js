@@ -14,7 +14,6 @@ import overviewRoutes from "./src/routes/overview.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// Enable CORS for client application
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:3000",
@@ -22,7 +21,6 @@ app.use(
   })
 );
 
-// Raw Stripe Webhook endpoint (must be declared BEFORE express.json())
 app.post(
   "/api/webhook/stripe",
   express.raw({ type: "application/json" }),
@@ -52,13 +50,11 @@ app.post(
         try {
           const { appointmentsCollection, transactionsCollection } = await connectToMongoDB();
 
-          // Update appointment status to paid
           await appointmentsCollection.updateOne(
             { _id: new ObjectId(appointmentId) },
             { $set: { paymentStatus: "paid", updatedAt: new Date() } }
           );
 
-          // Save verified transaction record
           const existingTx = await transactionsCollection.findOne({
             stripeSessionId: session.id,
           });
@@ -91,22 +87,18 @@ app.post(
   }
 );
 
-// Standard JSON body parser for all other routes
 app.use(express.json());
 
-// API Routes
 app.use("/api/services", servicesRoutes);
 app.use("/api/appointments", appointmentsRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/overview", overviewRoutes);
 
-// Health check / Base route
 app.get("/", (req, res) => {
   res.json({ message: "SalonBook Server is running smoothly!" });
 });
 
-// Start the server after verifying database connection
 connectToMongoDB()
   .then(() => {
     app.listen(PORT, () => {

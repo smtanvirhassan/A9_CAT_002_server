@@ -5,7 +5,6 @@ import { verifyToken, verifyAdmin, verifyNotBlocked } from "../middleware/auth.j
 
 const router = express.Router();
 
-// GET /api/services - Public with search, category filter, and price sort
 router.get("/", async (req, res) => {
   try {
     const { servicesCollection } = await connectToMongoDB();
@@ -13,19 +12,16 @@ router.get("/", async (req, res) => {
 
     const query = {};
 
-    // Filter by active status by default unless specified
     if (status) {
       if (status !== "all") query.status = status;
     } else {
       query.status = "active";
     }
 
-    // Category filter
     if (category && category !== "all") {
       query.category = category;
     }
 
-    // Search filter
     if (search && search.trim() !== "") {
       query.$or = [
         { serviceName: { $regex: search.trim(), $options: "i" } },
@@ -33,7 +29,6 @@ router.get("/", async (req, res) => {
       ];
     }
 
-    // Sorting
     let sortOption = { createdAt: -1 };
     if (sort === "price-asc") {
       sortOption = { price: 1 };
@@ -51,7 +46,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /api/services/featured - active services for homepage
 router.get("/featured", async (req, res) => {
   try {
     const { servicesCollection } = await connectToMongoDB();
@@ -67,7 +61,6 @@ router.get("/featured", async (req, res) => {
   }
 });
 
-// GET /api/services/categories - List unique categories
 router.get("/categories", async (req, res) => {
   try {
     const { servicesCollection } = await connectToMongoDB();
@@ -79,7 +72,6 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// GET /api/services/:id - Protected service details
 router.get("/:id", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { id } = req.params;
@@ -101,7 +93,6 @@ router.get("/:id", verifyToken, verifyNotBlocked, async (req, res) => {
   }
 });
 
-// POST /api/services - Admin creates new service
 router.post("/", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { serviceName, category, description, price, duration, image, status } = req.body;
@@ -143,7 +134,6 @@ router.post("/", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// PATCH /api/services/:id - Admin updates service
 router.patch("/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
@@ -190,7 +180,6 @@ router.patch("/:id", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// DELETE /api/services/:id - Admin deletes service
 router.delete("/:id", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;

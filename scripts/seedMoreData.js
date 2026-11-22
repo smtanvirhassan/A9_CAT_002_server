@@ -10,7 +10,7 @@ const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
 const fullServicesList = [
-  // 1. Haircut & Styling
+
   {
     serviceName: "Signature Haircut & Blowdry",
     category: "Haircut & Styling",
@@ -48,7 +48,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 2. Hair Coloring
   {
     serviceName: "Balayage & Glaze Color",
     category: "Hair Coloring",
@@ -86,7 +85,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 3. Hair Treatment
   {
     serviceName: "Keratin Smooth Treatment",
     category: "Hair Treatment",
@@ -124,7 +122,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 4. Facial & Skincare
   {
     serviceName: "Hydra-Luxe Facial",
     category: "Facial & Skincare",
@@ -162,7 +159,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 5. Makeup
   {
     serviceName: "Bridal & Glamour Makeup",
     category: "Makeup",
@@ -200,7 +196,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 6. Manicure & Pedicure
   {
     serviceName: "Deluxe Gel Manicure & Pedicure",
     category: "Manicure & Pedicure",
@@ -238,7 +233,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 7. Spa & Massage
   {
     serviceName: "Aromatherapy Deep Tissue Massage",
     category: "Spa & Massage",
@@ -276,7 +270,6 @@ const fullServicesList = [
     status: "active",
   },
 
-  // 8. Bridal & Packages
   {
     serviceName: "Ultimate Royal Bridal Sanctuary",
     category: "Bridal & Packages",

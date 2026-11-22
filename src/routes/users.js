@@ -5,7 +5,6 @@ import { verifyToken, verifyAdmin, verifyNotBlocked } from "../middleware/auth.j
 
 const router = express.Router();
 
-// GET /api/users - Admin views all registered customers
 router.get("/", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { usersCollection } = await connectToMongoDB();
@@ -21,7 +20,6 @@ router.get("/", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// PATCH /api/users/:id/block - Admin blocks or unblocks user
 router.patch("/:id/block", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
@@ -45,7 +43,6 @@ router.patch("/:id/block", verifyToken, verifyAdmin, async (req, res) => {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    // Safety rule: Admin cannot block other admins
     if (user.role === "admin") {
       return res.status(400).json({ msg: "Admin accounts cannot be blocked" });
     }
@@ -63,7 +60,6 @@ router.patch("/:id/block", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// GET /api/users/profile - Authenticated user views their own profile
 router.get("/profile", verifyToken, async (req, res) => {
   try {
     const { usersCollection } = await connectToMongoDB();
@@ -86,12 +82,10 @@ router.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
-// PATCH /api/users/profile - Authenticated user updates their own profile
 router.patch("/profile", verifyToken, async (req, res) => {
   try {
     const { name, image, phone } = req.body;
 
-    // Strict sanitization: Disallow updating role or isBlocked
     const updates = {};
     if (name !== undefined) updates.name = String(name).trim();
     if (image !== undefined) updates.image = String(image).trim();

@@ -111,7 +111,6 @@ async function seed() {
     const appointments = db.collection("appointments");
     const transactions = db.collection("transactions");
 
-    // Create Indexes
     await services.createIndex({ category: 1, status: 1 });
     await services.createIndex({ serviceName: "text" });
     await appointments.createIndex({ customerId: 1 });
@@ -119,7 +118,6 @@ async function seed() {
     await transactions.createIndex({ appointmentId: 1 });
     await users.createIndex({ email: 1 }, { unique: true });
 
-    // Seed services if collection is empty
     const count = await services.countDocuments();
     if (count === 0) {
       await services.insertMany(initialServices);
@@ -128,7 +126,6 @@ async function seed() {
       console.log(`Services collection already has ${count} items.`);
     }
 
-    // Ensure admin user role is admin
     const adminEmail = process.env.ADMIN_EMAIL || "admin@salonbook.com";
     await users.updateOne(
       { email: adminEmail },

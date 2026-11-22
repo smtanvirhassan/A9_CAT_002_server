@@ -5,9 +5,8 @@ import { verifyToken, verifyAdmin, verifyNotBlocked } from "../middleware/auth.j
 
 const router = express.Router();
 
-// POST /api/appointments - Customer creates an appointment
 router.get("/slots", async (req, res) => {
-  // Predefined time slots for appointments
+
   const slots = [
     "09:00 AM - 10:00 AM",
     "10:00 AM - 11:00 AM",
@@ -23,7 +22,7 @@ router.get("/slots", async (req, res) => {
 
 router.post("/", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
-    // Admins cannot submit customer appointment requests
+
     if (req.user.role === "admin") {
       return res.status(403).json({ msg: "Admins cannot submit customer appointment requests" });
     }
@@ -40,7 +39,6 @@ router.post("/", verifyToken, verifyNotBlocked, async (req, res) => {
 
     const { servicesCollection, appointmentsCollection } = await connectToMongoDB();
 
-    // Check service existence and status
     const service = await servicesCollection.findOne({ _id: new ObjectId(serviceId) });
     if (!service) {
       return res.status(404).json({ msg: "Service not found" });
@@ -50,7 +48,6 @@ router.post("/", verifyToken, verifyNotBlocked, async (req, res) => {
       return res.status(400).json({ msg: "This service is currently inactive and cannot be booked" });
     }
 
-    // Prevent duplicate active appointments for the same service, date, and time slot
     const existingConflict = await appointmentsCollection.findOne({
       serviceId: new ObjectId(serviceId),
       appointmentDate: appointmentDate,
@@ -92,7 +89,6 @@ router.post("/", verifyToken, verifyNotBlocked, async (req, res) => {
   }
 });
 
-// GET /api/appointments/my - Customer views their own appointments
 router.get("/my", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { appointmentsCollection } = await connectToMongoDB();
@@ -116,7 +112,6 @@ router.get("/my", verifyToken, verifyNotBlocked, async (req, res) => {
   }
 });
 
-// PATCH /api/appointments/:id/cancel - Customer cancels own pending appointment
 router.patch("/:id/cancel", verifyToken, verifyNotBlocked, async (req, res) => {
   try {
     const { id } = req.params;
@@ -131,7 +126,6 @@ router.patch("/:id/cancel", verifyToken, verifyNotBlocked, async (req, res) => {
       return res.status(404).json({ msg: "Appointment not found" });
     }
 
-    // Verify ownership
     const isOwner =
       appointment.customerId === req.user.id ||
       appointment.customerEmail === req.user.email;
@@ -140,7 +134,6 @@ router.patch("/:id/cancel", verifyToken, verifyNotBlocked, async (req, res) => {
       return res.status(403).json({ msg: "You can only cancel your own appointments" });
     }
 
-    // Customer can only cancel pending appointments
     if (req.user.role !== "admin" && appointment.status !== "pending") {
       return res.status(400).json({
         msg: "You cannot cancel an already confirmed or cancelled appointment",
@@ -160,7 +153,6 @@ router.patch("/:id/cancel", verifyToken, verifyNotBlocked, async (req, res) => {
   }
 });
 
-// GET /api/appointments/admin - Admin views all appointments
 router.get("/admin", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { appointmentsCollection } = await connectToMongoDB();
@@ -176,7 +168,6 @@ router.get("/admin", verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// PATCH /api/appointments/:id/status - Admin confirms or cancels appointment
 router.patch("/:id/status", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
@@ -197,12 +188,10 @@ router.patch("/:id/status", verifyToken, verifyAdmin, async (req, res) => {
       return res.status(404).json({ msg: "Appointment not found" });
     }
 
-    // Rule: Only pending appointments can be confirmed
     if (status === "confirmed" && appointment.status !== "pending") {
       return res.status(400).json({ msg: "Only pending appointments can be confirmed" });
     }
 
-    // Rule: Admin can cancel pending or confirmed appointments
     if (status === "cancelled" && !["pending", "confirmed"].includes(appointment.status)) {
       return res.status(400).json({ msg: "Appointment is already cancelled" });
     }
