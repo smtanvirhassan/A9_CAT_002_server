@@ -22,13 +22,26 @@ let usersCollection = null;
 
 export async function connectToMongoDB() {
   try {
-    if (!client) {
+    const isClosed =
+      !client ||
+      !client.topology ||
+      (typeof client.topology.isDestroyed === "function" && client.topology.isDestroyed()) ||
+      (typeof client.topology.isClosed === "function" && client.topology.isClosed()) ||
+      client.topology.s?.state === "closed" ||
+      client.topology.s?.state === "closing";
+
+    if (isClosed) {
+      if (client && typeof client.close === "function") {
+        try {
+          client.close().catch(() => {});
+        } catch (e) {}
+      }
       client = new MongoClient(uri, {
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 5000,
+        socketTimeoutMS: 15000,
       });
-    }
-    if (!db) {
       await client.connect();
       console.log("Successfully connected to MongoDB!");
       db = client.db("salonbook");
