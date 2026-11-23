@@ -6,7 +6,7 @@ let JWKS = null;
 
 function getJWKS() {
   if (!JWKS) {
-    const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+    const clientUrl = (process.env.CLIENT_URL || "https://client-one-psi.vercel.app").replace(/\/+$/, "");
     JWKS = createRemoteJWKSet(new URL(`${clientUrl}/api/auth/jwks`));
   }
   return JWKS;
@@ -29,30 +29,32 @@ export const verifyToken = async (req, res, next) => {
       const result = await jwtVerify(token, jwks);
       payload = result.payload;
     } catch (jwksErr) {
-
       return res.status(401).send({ msg: "Unauthorized: Invalid or expired token!" });
     }
 
-    const { usersCollection } = await connectToMongoDB();
-
     let dbUser = null;
-    if (payload.sub) {
-      try {
-        dbUser = await usersCollection.findOne({ _id: new ObjectId(payload.sub) });
-      } catch (err) {
-        dbUser = await usersCollection.findOne({ id: payload.sub });
+    try {
+      const { usersCollection } = await connectToMongoDB();
+      if (payload.sub) {
+        try {
+          dbUser = await usersCollection.findOne({ _id: new ObjectId(payload.sub) });
+        } catch (err) {
+          dbUser = await usersCollection.findOne({ id: payload.sub });
+        }
       }
-    }
-    if (!dbUser && payload.email) {
-      dbUser = await usersCollection.findOne({ email: payload.email });
+      if (!dbUser && payload.email) {
+        dbUser = await usersCollection.findOne({ email: payload.email });
+      }
+    } catch (dbErr) {
+      console.warn("DB user lookup fallback to JWT payload:", dbErr.message);
     }
 
     req.user = {
-      id: dbUser?._id?.toString() || payload.sub,
+      id: dbUser?._id?.toString() || payload.id || payload.sub,
       email: dbUser?.email || payload.email,
       name: dbUser?.name || payload.name,
       role: dbUser?.role || payload.role || "customer",
-      isBlocked: !!dbUser?.isBlocked,
+      isBlocked: dbUser ? !!dbUser.isBlocked : !!payload.isBlocked,
     };
 
     next();
